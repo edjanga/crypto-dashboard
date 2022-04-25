@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href= "{{ url_for('static',filename='style/stylesheet.css') }}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/fe68b6d84f.js" crossorigin="anonymous"></script>
+    <title>Crypto - Dashboard | {% block title %} {% endblock %} </title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="side_nav">
+            <h2>Overview</h2>
+            <ul>
+                <li><a href="{{ url_for('index') }}"><i class="fa-solid fa-house-chimney"></i>home</a> </li>
+                <li><a href="{{ url_for('live_prices') }}" target="_blank">
+                    <i class="fa-solid fa-chart-area"></i> live prices</a> </li>
+                <li><a href="{{ url_for('top') }}" target="_blank">
+                    <i class="fa-solid fa-arrow-trend-up"></i> top performers</a> </li>
+                <li><a href="{{ url_for('bottom') }}" target="_blank">
+                    <i class="fa-solid fa-arrow-trend-down"></i> bottom performers</a></li>
+                <li><a href="{{ url_for('correlation') }}" target="_blank"><i class="fa-solid fa-table">
+                </i> correlation</a></li>
+                <li><a href="{{ url_for('analytics') }}" target="_blank">
+                    <i class="fa-solid fa-chart-pie"></i> analytics</a></li>
+            </ul>
+            <div class="contact">
+                <a href="https://www.linkedin.com/in/emmanuel-djanga-1b494671/">
+                    <i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://twitter.com/emmanuel_djanga"><i class="fa-brands fa-twitter"></i></a>
+                <a href="https://www.kaggle.com/edjanga"><i class="fa-brands fa-kaggle"></i></a>
+                <a href="https://github.com/edjanga"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+    </div>
+    <div>
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>
