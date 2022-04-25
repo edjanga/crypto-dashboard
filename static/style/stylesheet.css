@@ -80,12 +80,18 @@
     padding: 20px;
 }
 
-.wrapper .contact ul li{
+.contact{
+    color: #000000;
+    text-align: center;
+    padding: 0 10px 0 10px;
+}
+
+.wrapper .social_media ul li{
     padding: 15px;
     display: inline-block;
 }
 
-.wrapper .side_nav .contact{
+.wrapper .side_nav .social_media{
     position: absolute;
     bottom: 0;
     left: 50%
@@ -93,19 +99,17 @@
     display: flex;
 }
 
-.wrapper .side_nav .contact a{
+.wrapper .side_nav .social_media a{
     display: block;
-    width: 40px;
+    width: 30px;
     height: 40px;
     line-height: 40px;
     text-align: center;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     margin: 2px 5px;
-
 }
 
-.wrapper .side_nav .contact a:visited{
-    color: rgb(0,0,252);
-
+.wrapper .side_nav .social_media a:visited{
+    color: #000000;
 }
