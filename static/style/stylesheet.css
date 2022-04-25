@@ -15,11 +15,11 @@
 }
 
 .wrapper .side_nav{
-    position: fixed;
     width: 200px;
     height: 100%;
     padding: 30px 0;
     background-color: #000000;
+    position: fixed;
 }
 
 .wrapper .side_nav h2{
@@ -83,7 +83,10 @@
 .contact{
     color: #000000;
     text-align: center;
-    padding: 0 10px 0 10px;
+    padding: 5px;
+    display: flex;
+    margin: 0 10px 0 5px;
+    position: relative;
 }
 
 .wrapper .social_media ul li{
