@@ -93,3 +93,4 @@ client.py
 webserver.py
 crypto-dashboard.db
 config.py
+.idea
