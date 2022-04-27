@@ -1,4 +1,7 @@
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, render_template
+from pages import create_dash_application
+from data_dummy import DataDummy
+
 
 app = Flask(__name__)
 
@@ -32,4 +35,4 @@ def analytics(name='analytics'):
 
 
 if __name__ == '__main__':
-    app.run()
+    create_dash_application(flask_app=app)

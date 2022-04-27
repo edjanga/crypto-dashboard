@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+data_dummy.py
+coinapi-server.py
+client.py
+webserver.py
+crypto-dashboard.db
+config.py

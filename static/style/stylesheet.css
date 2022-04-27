@@ -116,3 +116,14 @@
 .wrapper .side_nav .social_media a:visited{
     color: #000000;
 }
+
+.wrapper .main_content{
+    width: 100%;
+    margin-left: 200px;
+}
+
+.wrapper .main_content h1{
+    padding: 20px;
+    font-size: 50px;
+    color: #000000;
+}
