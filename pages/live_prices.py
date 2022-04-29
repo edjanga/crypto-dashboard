@@ -6,6 +6,7 @@ from data_dummy import DataDummy
 from app import dash_app
 import pandas as pd
 from math import ceil
+import numpy as np
 import pdb
 
 dash_app.title = 'Dashboard | Live prices'
@@ -25,12 +26,22 @@ def update_live_prices(pathname):
                      index_col='date').drop(['index'], axis=1).drop('indicator', axis=1).reset_index(False)
     assets = df['ticker'].unique().tolist()
     container_all_cards_ls = []
-    nrow = ceil(len(assets)%3)
-    count = 0
+    if len(assets)%3!=0:
+        nrow = ceil(len(assets)/3)
+        print('nrow is %s' %nrow)
+    else:
+        nrow = len(assets)
+    # Trick to get the asset names into the same grid shape as the page layout
+    assets_grid = assets[::]
+    # Fill any gap to make the list reshapable by nx3 grid
+    assets_grid = assets_grid + (3 - nrow) * [None]
+    assets_grid = np.reshape(assets_grid, (nrow, 3))
     temp_child_ls = []
-    while count <= nrow:
-        for num in range(0,len(assets)-2):
-            if num%3==0:
+    for i in range(0,nrow):
+        for j in range(0,3):
+            if assets_grid[i,j] is None:
+                break
+            else:
                 temp_child_ls.append(\
                     dbc.Row(\
                         children=[\
@@ -39,48 +50,8 @@ def update_live_prices(pathname):
                                     dbc.Card(\
                                         children=\
                                             [dbc.CardBody(\
-                                                children=[dbc.Row(children=[dbc.Col(children=[assets[num],\
+                                                children=[dbc.Row(children=[dbc.Col(children=[assets_grid[i,j],\
                                                                                               html.P('Change 1D')])]),\
                                                           dbc.Row(children=[dbc.Col(children=[])])])]))]))
-                temp_child_ls.append( \
-                    dbc.Row( \
-                        children=[ \
-                            dbc.Col( \
-                                children= \
-                                    dbc.Card( \
-                                        children= \
-                                            [dbc.CardBody( \
-                                                children=[dbc.Row(children=[dbc.Col(children=[assets[num+1], \
-                                                                                              html.P('Change 1D')])]), \
-                                                          dbc.Row(children=[dbc.Col(children=[])])])]))]))
-                temp_child_ls.append( \
-                    dbc.Row( \
-                        children=[ \
-                            dbc.Col( \
-                                children= \
-                                    dbc.Card( \
-                                        children= \
-                                            [dbc.CardBody( \
-                                                children=[dbc.Row(children=[dbc.Col(children=[assets[num+2], \
-                                                                                              html.P('Change 1D')])]), \
-                                                          dbc.Row(children=[dbc.Col(children=[])])])]))]))
-        count += 1
-                #temp_child_ls.append(dbc.Row(children=[]))
-                #temp_child_ls.append(dbc.Row(children=[]))
-                        # # Asset #2
-                        #     dbc.Col( \
-                        #         dbc.Card( \
-                        #             [dbc.CardBody( \
-                        #                 dbc.Row( \
-                        #                     [dbc.Col([assets[num+1]]), dbc.Col([html.P('Daily change')])]), \
-                        #                 dbc.Row(dbc.Col([])))])), \
-                        #     # Asset #3
-                        #     dbc.Col( \
-                        #         dbc.Card( \
-                        #             [dbc.CardBody( \
-                        #                 dbc.Row( \
-                        #                     [dbc.Col([assets[num]]), dbc.Col([html.P('Daily change')])]), \
-                        #                 dbc.Row(dbc.Col([])))]))]))
-                #container_all_cards_ls.append(temp_child_ls)
-    new_children = dbc.Container(children=temp_child_ls)
+        new_children = dbc.Container(children=temp_child_ls)
     return new_children
