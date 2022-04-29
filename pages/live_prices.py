@@ -24,11 +24,28 @@ def update_live_prices(pathname):
     df = pd.read_sql(sql=query, \
                      con=data_dummy_obj.dummy_conn_obj, \
                      index_col='date').drop(['index'], axis=1).drop('indicator', axis=1).reset_index(False)
+    query = ''
     assets = df['ticker'].unique().tolist()
-    container_all_cards_ls = []
+    for index, asset in enumerate(assets):
+        if index == len(assets) - 1:
+            query = ','.join((query, ''.join((r'"%s"' % asset, ')'))))
+        elif index == 0:
+            query = ''.join((query, '(', r'"%s"' % asset))
+        else:
+            query = ','.join((query, r'"%s"' % asset))
+    query = ' '.join(('SELECT * FROM dummy_data WHERE ticker in', query, 'AND indicator = "close";'))
+    df = pd.read_sql(sql=query, \
+                     con=data_dummy_obj.dummy_conn_obj,\
+                     index_col='date').drop(['index'],axis=1).drop('indicator',axis=1).reset_index(False)
+    # Unmelt data then calculate returns
+    df = pd.pivot_table(df,values='price',index='date',columns='ticker')
+    df = df.loc[:,df.columns.isin(assets)]
+    df = df.ffill()
+    first_date = df.apply(pd.Series.first_valid_index).sort_values(ascending=False)[0]
+    df = df.loc[first_date:,:].reset_index(False)
+    df = pd.melt(df.iloc[-20:,],id_vars='date',value_name='price')
     if len(assets)%3!=0:
         nrow = ceil(len(assets)/3)
-        print('nrow is %s' %nrow)
     else:
         nrow = len(assets)
     # Trick to get the asset names into the same grid shape as the page layout
@@ -42,6 +59,7 @@ def update_live_prices(pathname):
             if assets_grid[i,j] is None:
                 break
             else:
+                fig = px.line(df.loc[df['ticker']==assets_grid[i,j],:],x='date',y='price')
                 temp_child_ls.append(\
                     dbc.Row(\
                         children=[\
@@ -50,8 +68,10 @@ def update_live_prices(pathname):
                                     dbc.Card(\
                                         children=\
                                             [dbc.CardBody(\
-                                                children=[dbc.Row(children=[dbc.Col(children=[assets_grid[i,j],\
-                                                                                              html.P('Change 1D')])]),\
-                                                          dbc.Row(children=[dbc.Col(children=[])])])]))]))
+                                                children=[\
+                                                    dbc.Row(\
+                                                        children=[assets_grid[i,j],html.P('Change 1D')]),\
+                                                          dbc.Row(\
+                                                              children=[dcc.Graph(figure=fig)])])]))]))
         new_children = dbc.Container(children=temp_child_ls)
     return new_children
