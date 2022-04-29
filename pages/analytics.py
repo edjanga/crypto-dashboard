@@ -1,11 +1,9 @@
 from dash import Dash, html, Input, Output, dcc
 import plotly.express as px
 from app import dash_app
-import numpy as np
 import pandas as pd
 from app import universe_ls
 from data_dummy import DataDummy
-import pdb
 
 data_dummy_obj = DataDummy()
 
