@@ -1,10 +1,8 @@
-from dash import Dash, html, Input, Output, dcc
+from dash import html, Input, Output, dcc
 import plotly.express as px
 from app import dash_app
-from app import universe_ls
 from data_dummy import DataDummy
 import pandas as pd
-import pdb
 
 dash_app.title = 'Dashboard | Top Performers'
 layout = html.Div([html.H1('Crypto Dashboard',className='header',id='page'),\
@@ -39,8 +37,8 @@ def filter_heatmap(pathname):
     df = df.loc[:,df.columns.isin(assets)]
     df = df.pct_change().dropna().sort_index()
     top_performers_ls = df.iloc[-1,:].sort_values(ascending=False).index[:3].tolist()
-    df = df[top_performers_ls].round(3)
-    fig = px.bar(data_frame=df.iloc[-1,:],text_auto=True,title='Top Performers',labels={'value':'returns',\
-                                                                                           'variable':''})
+    df = df[top_performers_ls].round(5)
+    fig = px.bar(data_frame=df.iloc[-1,:],text_auto=True,\
+                 title='Top Performers',labels={'value':'returns','variable':''},orientation='h')
     new_children = [html.Br(),dcc.Graph(id='top_performers',figure=fig)]
     return new_children

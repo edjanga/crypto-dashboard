@@ -31,16 +31,16 @@ def display_page(pathname):
 
 data_dummy_obj = DataDummy()
 if __name__ == '__main__':
-    # test_mutltiprocessing = False
-    # if test_mutltiprocessing:
-    #     p1 = multiprocessing.Process(target=data_dummy_obj.live_query, args=[universe_ls])
-    #     p2 = multiprocessing.Process(target=dash_app.run_server(debug=True, port=5559))
-    #     p1.start()
-    #     p2.start()
-    #     p1.join()
-    #     p2.join()
-    # else:
-    dash_app.run_server(debug=True)
+    test_mutltiprocessing = False
+    if test_mutltiprocessing:
+        p1 = multiprocessing.Process(target=data_dummy_obj.live_query, args=[universe_ls])
+        p2 = multiprocessing.Process(target=dash_app.run_server(debug=True))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+    else:
+        dash_app.run_server(debug=True)
 
 
 

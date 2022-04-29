@@ -1,7 +1,6 @@
-from dash import Dash, html, Input, Output, dcc
+from dash import html, Input, Output, dcc
 import plotly.express as px
 from app import dash_app
-from app import universe_ls
 from data_dummy import DataDummy
 import pandas as pd
 import pdb
