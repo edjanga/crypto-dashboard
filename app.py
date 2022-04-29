@@ -17,12 +17,17 @@ def create_dash_application(flask_app):
                 children=\
                     [html.H2('Overview'),\
                      html.Ul(\
-                         children=[html.Li(dcc.Link(children=['home'],href='/pages/home.py')),\
-                                   html.Li(dcc.Link(children=['live prices'],href='/pages/live_prices.py')),\
-                                   html.Li(dcc.Link(children=['top performers'],href='/pages/top_performers.py')),\
-                                   html.Li(dcc.Link(children=['bottom performers'],href='/pages/bottom_performers.py')),\
-                                   html.Li(dcc.Link(children=['correlation'],href='/pages/correlation.py')),\
-                                   html.Li(dcc.Link(children=['analytics'],href='/pages/analytics.py'))]),\
+                         children=[html.Li(dcc.Link(children=['home'],href='/pages/home.py',target='_blank')),\
+                                   html.Li(dcc.Link(children=['live prices'],\
+                                                    href='/pages/live_prices.py',target='_blank')),\
+                                   html.Li(dcc.Link(children=['top performers'],\
+                                                    href='/pages/top_performers.py',target='_blank')),\
+                                   html.Li(dcc.Link(children=['bottom performers'],\
+                                                    href='/pages/bottom_performers.py',target='_blank')),\
+                                   html.Li(dcc.Link(children=['correlation'],\
+                                                    href='/pages/correlation.py',target='_blank')),\
+                                   html.Li(dcc.Link(children=['analytics'],\
+                                                    href='/pages/analytics.py',target='_blank'))]),\
                      html.Div(children=[html.P('Contact')],className='contact')],className='side_nav'), \
                 html.Div(children=[],id='page-content',className='main_content')],className='wrapper')
 
