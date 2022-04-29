@@ -31,7 +31,7 @@ def display_page(pathname):
 
 data_dummy_obj = DataDummy()
 if __name__ == '__main__':
-    test_mutltiprocessing = False
+    test_mutltiprocessing = True
     if test_mutltiprocessing:
         p1 = multiprocessing.Process(target=data_dummy_obj.live_query, args=[universe_ls])
         p2 = multiprocessing.Process(target=dash_app.run_server(debug=True))

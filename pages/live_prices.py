@@ -12,13 +12,15 @@ import pdb
 dash_app.title = 'Dashboard | Live prices'
 layout = html.Div([html.H1('Crypto Dashboard',className='header',id='page'),\
                    html.Br(),\
+                   dcc.Interval(id='interval-component',interval=5*1000),\
                    html.Div(children=[],id='page_content_live_prices')])
 
 @dash_app.callback(
     Output(component_id='page_content_live_prices',component_property='children'),
-    Input(component_id='url',component_property='pathname')
+    [Input(component_id='interval-component', component_property='n_intervals'),\
+     Input(component_id='url',component_property='pathname')]
 )
-def update_live_prices(pathname):
+def update_live_prices(n,pathname):
     data_dummy_obj = DataDummy()
     query = 'SELECT * FROM dummy_data WHERE indicator = "close";'
     df = pd.read_sql(sql=query, \
@@ -72,6 +74,7 @@ def update_live_prices(pathname):
                                                     dbc.Row(\
                                                         children=[assets_grid[i,j],html.P('Change 1D')]),\
                                                           dbc.Row(\
-                                                              children=[dcc.Graph(figure=fig)])])]))]))
+                                                              children=[dcc.Graph(figure=fig)])])],\
+                                        ),style={'width':'24rem','height':'10'})]))
         new_children = dbc.Container(children=temp_child_ls)
     return new_children
