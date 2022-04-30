@@ -95,3 +95,5 @@ tech-stock-dashboard.db
 config.py
 .idea
 test.py
+.DS_Store
+templates/
