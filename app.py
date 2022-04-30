@@ -2,14 +2,11 @@ from dash import Dash, html, dcc
 from flask import Flask
 import dash_bootstrap_components as dbc
 from dash_iconify import DashIconify
-from data_dummy import DataDummy
 
 
 
 def create_dash_application(flask_app):
-    """
-    fa fa-icon to be added.
-    """
+
     style_fa_dd = {'color':'#00eb2b'}
     style_contact_dd = {'color':'#ffffff', 'padding':5}
     px = 23
@@ -43,7 +40,7 @@ dcc.Link(children=['correlation'], href='/pages/correlation.py',target='_blank')
                            style={'display': 'flex'})), \
           html.Li(html.Div([DashIconify(icon="ant-design:pie-chart-outlined", style=style_fa_dd, \
 width=px, height=px, className='fa-chart-pie'), \
-dcc.Link(children=['correlation'], href='/pages/analytics.py', target='_blank')], \
+dcc.Link(children=['analytics'], href='/pages/analytics.py', target='_blank')], \
                            style={'display': 'flex'}))]),\
                      html.Div(children=[html.Div(children=[html.P('Contact', style={'text-align':'center',\
                                                                                     'color':'#ffffff',\
