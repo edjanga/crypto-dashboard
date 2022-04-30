@@ -20,7 +20,7 @@ layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='
     [Input(component_id='interval-component', component_property='n_intervals'),\
      Input(component_id='url',component_property='pathname')]
 )
-def update_live_prices(n,pathname):
+def update_prices(n,pathname):
     data_dummy_obj = DataDummy()
     query = 'SELECT * FROM dummy_data WHERE indicator = "close";'
     df = pd.read_sql(sql=query, \
@@ -45,7 +45,7 @@ def update_live_prices(n,pathname):
     df = df.ffill()
     first_date = df.apply(pd.Series.first_valid_index).sort_values(ascending=False)[0]
     df = df.loc[first_date:,:].reset_index(False)
-    df = pd.melt(df.iloc[-20:,],id_vars='date',value_name='price')
+    df = pd.melt(df,id_vars='date',value_name='price')#.iloc[-100:,]
     if len(assets)%2!=0:
         nrow = ceil(len(assets)/2)
     else:
@@ -57,13 +57,12 @@ def update_live_prices(n,pathname):
     assets_grid = np.reshape(assets_grid, (nrow, 2))
     temp_child_ls = []
     for i in range(0,nrow):
-        if (assets_grid[i,0] is None):
-            break
-        elif (assets_grid[i,1] is None):
+        #pdb.set_trace()
+        if (assets_grid[i,1] is None):
             break
         else:
-                titel1 = ' -'.join((assets_grid[i,0],' Change 1D'))
-                titel2 = ' -'.join((assets_grid[i,1], ' Change 1D'))
+                titel1 = ' -'.join((assets_grid[i,0],' Daily Price'))
+                titel2 = ' -'.join((assets_grid[i,1], ' Daily Price'))
                 fig1 = px.line(data_frame=df.loc[df['ticker']==assets_grid[i,0],:],x='date',y='price',title=titel1)
                 fig2 = px.line(data_frame=df.loc[df['ticker'] == assets_grid[i,1],:], x='date', y='price',title=titel2)
                 row = html.Div(

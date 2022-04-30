@@ -40,7 +40,7 @@ if __name__ == '__main__':
     #     p1.join()
     #     p2.join()
     # else:
-    dash_app.run_server(debug=True)
+    dash_app.run_server(debug=True,port=8051)
 
 
 
