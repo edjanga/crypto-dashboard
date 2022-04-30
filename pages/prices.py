@@ -1,13 +1,12 @@
-from dash import Dash, html, Input, Output, dcc
+from dash import html, Input, Output, dcc
 import dash_bootstrap_components as dbc
 from app import dash_app
 import plotly.express as px
-from data_dummy import DataDummy
+from data import Data
 from app import dash_app
 import pandas as pd
 from math import ceil
 import numpy as np
-import pdb
 
 dash_app.title = 'Dashboard | Live prices'
 layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='header',id='page'),\
@@ -21,7 +20,7 @@ layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='
      Input(component_id='url',component_property='pathname')]
 )
 def update_prices(n,pathname):
-    data_dummy_obj = DataDummy()
+    data_dummy_obj = Data()
     query = 'SELECT * FROM dummy_data WHERE indicator = "close";'
     df = pd.read_sql(sql=query, \
                      con=data_dummy_obj.dummy_conn_obj, \

@@ -1,7 +1,7 @@
 from dash import html, Input, Output, dcc
 import plotly.express as px
 from app import dash_app
-from data_dummy import DataDummy
+from data import Data
 import pandas as pd
 
 dash_app.title = 'Dashboard | Top Performers'
@@ -16,7 +16,7 @@ layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='
     Input(component_id='url',component_property='pathname')
 )
 def filter_heatmap(pathname):
-    data_dummy_obj = DataDummy()
+    data_dummy_obj = Data()
     assets = pd.read_sql('SELECT DISTINCT ticker FROM dummy_data;',con=data_dummy_obj.dummy_conn_obj)
     assets = assets.ticker.tolist()
     assets.sort()

@@ -1,10 +1,8 @@
 from dash import html, Input, Output, dcc
 import plotly.express as px
 from app import dash_app
-from app import universe_ls
-from data_dummy import DataDummy
+from data import Data
 import pandas as pd
-import pdb
 
 dash_app.title = 'Dashboard | Bottom Performers'
 layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='header',id='page'),\
@@ -12,13 +10,12 @@ layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='
                    html.Div(children=[],id='page_content_bottom_performers')])
 
 
-
 @dash_app.callback(
     Output(component_id='page_content_bottom_performers',component_property='children'),
     Input(component_id='url',component_property='pathname')
 )
 def bar_plot_bottom_performer(pathname):
-    data_dummy_obj = DataDummy()
+    data_dummy_obj = Data()
     assets = pd.read_sql('SELECT DISTINCT ticker FROM dummy_data;',con=data_dummy_obj.dummy_conn_obj)
     assets = assets.ticker.tolist()
     assets.sort()

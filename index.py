@@ -1,10 +1,9 @@
 from dash import Input, Output
 from pages import home, analytics, bottom_performers, correlation, prices, top_performers
-import requests
 from app import dash_app
 from app import server
 from app import universe_ls
-from data_dummy import DataDummy
+from data import Data
 import multiprocessing
 import requests
 
@@ -29,7 +28,7 @@ def display_page(pathname):
     else:
         pass
 
-data_dummy_obj = DataDummy()
+data_dummy_obj = Data()
 if __name__ == '__main__':
     # test_mutltiprocessing = False
     # if test_mutltiprocessing:

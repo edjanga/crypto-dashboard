@@ -1,9 +1,8 @@
 from dash import html, Input, Output, dcc
 import plotly.express as px
 from app import dash_app
-from data_dummy import DataDummy
+from data import Data
 import pandas as pd
-import pdb
 
 dash_app.title = 'Dashboard | Correlation'
 layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='header',id='page'),\
@@ -17,7 +16,7 @@ layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='
     Input(component_id='url',component_property='pathname')
 )
 def asset_check_list(pathname):
-    data_dummy_obj = DataDummy()
+    data_dummy_obj = Data()
     assets = pd.read_sql('SELECT DISTINCT ticker FROM dummy_data;',con=data_dummy_obj.dummy_conn_obj)
     assets = assets.ticker.tolist()
     assets.sort()
@@ -29,7 +28,7 @@ def asset_check_list(pathname):
     Input(component_id='assets',component_property='value')
 )
 def update_plot(ticker_ls):
-    data_dummy_obj = DataDummy()
+    data_dummy_obj = Data()
     assets = pd.read_sql('SELECT DISTINCT ticker FROM dummy_data;', con=data_dummy_obj.dummy_conn_obj)
     assets = assets.ticker.tolist()
     assets.sort()

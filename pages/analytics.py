@@ -3,9 +3,9 @@ import plotly.express as px
 from app import dash_app
 import pandas as pd
 from app import universe_ls
-from data_dummy import DataDummy
+from data import Data
 
-data_dummy_obj = DataDummy()
+data_dummy_obj = Data()
 
 dash_app.title = 'Dashboard | Analytics'
 layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='header',id='page'),\
