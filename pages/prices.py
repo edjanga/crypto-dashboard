@@ -10,9 +10,9 @@ import numpy as np
 import pdb
 
 dash_app.title = 'Dashboard | Live prices'
-layout = html.Div([html.H1('Crypto Dashboard',className='header',id='page'),\
+layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='header',id='page'),\
                    html.Br(),\
-                   dcc.Interval(id='interval-component',interval=5*1000),\
+                   dcc.Interval(id='interval-component',interval=60*60*1000),\
                    html.Div(children=[],id='page_content_live_prices')])
 
 @dash_app.callback(
@@ -46,35 +46,37 @@ def update_live_prices(n,pathname):
     first_date = df.apply(pd.Series.first_valid_index).sort_values(ascending=False)[0]
     df = df.loc[first_date:,:].reset_index(False)
     df = pd.melt(df.iloc[-20:,],id_vars='date',value_name='price')
-    if len(assets)%3!=0:
-        nrow = ceil(len(assets)/3)
+    if len(assets)%2!=0:
+        nrow = ceil(len(assets)/2)
     else:
         nrow = len(assets)
     # Trick to get the asset names into the same grid shape as the page layout
     assets_grid = assets[::]
     # Fill any gap to make the list reshapable by nx3 grid
-    assets_grid = assets_grid + (3 - nrow) * [None]
-    assets_grid = np.reshape(assets_grid, (nrow, 3))
+    assets_grid = assets_grid + abs((2 - nrow)) * [None]
+    assets_grid = np.reshape(assets_grid, (nrow, 2))
     temp_child_ls = []
     for i in range(0,nrow):
-        for j in range(0,3):
-            if assets_grid[i,j] is None:
-                break
-            else:
-                fig = px.line(df.loc[df['ticker']==assets_grid[i,j],:],x='date',y='price')
-                temp_child_ls.append(\
-                    dbc.Row(\
-                        children=[\
-                            dbc.Col(\
-                                children=\
-                                    dbc.Card(\
-                                        children=\
-                                            [dbc.CardBody(\
-                                                children=[\
-                                                    dbc.Row(\
-                                                        children=[assets_grid[i,j],html.P('Change 1D')]),\
-                                                          dbc.Row(\
-                                                              children=[dcc.Graph(figure=fig)])])],\
-                                        ),style={'width':'24rem','height':'10'})]))
-        new_children = dbc.Container(children=temp_child_ls)
+        if (assets_grid[i,0] is None):
+            break
+        elif (assets_grid[i,1] is None):
+            break
+        else:
+                titel1 = ' -'.join((assets_grid[i,0],' Change 1D'))
+                titel2 = ' -'.join((assets_grid[i,1], ' Change 1D'))
+                fig1 = px.line(data_frame=df.loc[df['ticker']==assets_grid[i,0],:],x='date',y='price',title=titel1)
+                fig2 = px.line(data_frame=df.loc[df['ticker'] == assets_grid[i,1],:], x='date', y='price',title=titel2)
+                row = html.Div(
+                    [
+                        dbc.Row(
+                            [
+                                dbc.Col(html.Div([dcc.Graph(figure=fig1)])), \
+                                dbc.Col(html.Div([dcc.Graph(figure=fig2)]))
+                            ]
+                        )
+                    ]
+                )
+                temp_child_ls.append(row)
+
+    new_children = dbc.Container(children=html.Div(temp_child_ls))
     return new_children

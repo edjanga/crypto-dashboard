@@ -6,7 +6,7 @@ import pandas as pd
 import pdb
 
 dash_app.title = 'Dashboard | Correlation'
-layout = html.Div([html.H1('Crypto Dashboard',className='header',id='page'),\
+layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='header',id='page'),\
                    html.Br(),\
                    html.Div(id='assets_checklist'),\
                    html.Div(children=[],id='page_content_correlation')])

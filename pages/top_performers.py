@@ -5,7 +5,7 @@ from data_dummy import DataDummy
 import pandas as pd
 
 dash_app.title = 'Dashboard | Top Performers'
-layout = html.Div([html.H1('Crypto Dashboard',className='header',id='page'),\
+layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='header',id='page'),\
                    html.Br(),\
                    html.Div(children=[],id='page_content_top_performers')])
 

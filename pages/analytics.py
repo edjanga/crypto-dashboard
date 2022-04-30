@@ -8,13 +8,14 @@ from data_dummy import DataDummy
 data_dummy_obj = DataDummy()
 
 dash_app.title = 'Dashboard | Analytics'
-layout = html.Div([html.H1('Crypto Dashboard',className='header',id='page'),\
+layout = html.Div([html.H1(children=[html.B('Tech Stock Dashboard')],className='header',id='page'),\
                   html.Div([html.P('Stock Universe - Select a ticker'),html.Br(),\
                             dcc.Dropdown(id='dropdown',value='',options={ticker:ticker for ticker in universe_ls},\
                                          persistence=True,persistence_type='memory',multi=True),\
                             html.Br(),html.P('Box plot - style'),html.Br(),\
                             dcc.RadioItems(id='box_plot_type',options=['box', 'violin', 'rug'],\
-                                           value='box', inline=True, inputStyle={'margin': '10px'})]),
+                                           value='box', inline=True, inputStyle={'margin': '10px'})],\
+                           style={'font-size':20}),
                   html.Div(children=[dcc.Graph(id='page_content_analytics', figure={})])])
 
 @dash_app.callback(

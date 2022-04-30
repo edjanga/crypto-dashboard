@@ -91,7 +91,7 @@ data_dummy.py
 coinapi-server.py
 client.py
 webserver.py
-crypto-dashboard.db
+tech-stock-dashboard.db
 config.py
 .idea
 test.py

@@ -1,5 +1,6 @@
 from dash import Dash, html, dcc
 from flask import Flask
+import dash_bootstrap_components as dbc
 from data_dummy import DataDummy
 
 
@@ -9,7 +10,8 @@ def create_dash_application(flask_app):
     fa fa-icon to be added.
     """
     dash_app = Dash(server=flask_app, name='Dashboard',url_base_pathname='/',\
-                    external_stylesheets=['/static/style/stylesheet.css'],suppress_callback_exceptions=True)
+                    external_stylesheets=['/static/style/stylesheet.css',\
+                                          dbc.themes.BOOTSTRAP],suppress_callback_exceptions=True)
     dash_app.layout = html.Div( \
         children=\
             [dcc.Location(id='url', refresh=False),\
@@ -18,8 +20,8 @@ def create_dash_application(flask_app):
                     [html.H2('Overview'),\
                      html.Ul(\
                          children=[html.Li(dcc.Link(children=['home'],href='/pages/home.py',target='_blank')),\
-                                   html.Li(dcc.Link(children=['live prices'],\
-                                                    href='/pages/live_prices.py',target='_blank')),\
+                                   html.Li(dcc.Link(children=['prices'],\
+                                                    href='/pages/prices.py',target='_blank')),\
                                    html.Li(dcc.Link(children=['top performers'],\
                                                     href='/pages/top_performers.py',target='_blank')),\
                                    html.Li(dcc.Link(children=['bottom performers'],\
@@ -36,4 +38,4 @@ def create_dash_application(flask_app):
 flask_app = Flask(__name__)
 dash_app = create_dash_application(flask_app=flask_app)
 server = dash_app.server
-universe_ls = ['TSLA', 'TWTR', 'FB', 'MSFT', 'GOOGL', 'AAPL']
+universe_ls = ['TSLA', 'TWTR', 'FB', 'MSFT', 'GOOGL', 'AAPL','AMZN','IBM','NFLX','ABNB','ZM']
