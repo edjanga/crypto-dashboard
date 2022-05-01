@@ -90,7 +90,6 @@ ENV/
 coinapi-server.py
 client.py
 webserver.py
-tech-stock-dashboard.db
 .idea
 test.py
 .DS_Store
