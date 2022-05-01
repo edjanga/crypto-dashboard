@@ -12,7 +12,8 @@ def create_dash_application(flask_app):
     px = 23
     dash_app = Dash(server=flask_app, name='Dashboard',url_base_pathname='/',\
                     external_stylesheets=['/static/style/stylesheet.css',\
-                                          dbc.themes.BOOTSTRAP],suppress_callback_exceptions=True)
+                                          dbc.themes.BOOTSTRAP],suppress_callback_exceptions=True,\
+                    meta_tags=[{'name':'viewport', 'content':'width=device-width', 'initial-scale':1.0}])
     dash_app.layout = html.Div( \
         children=\
             [dcc.Location(id='url', refresh=False),\
