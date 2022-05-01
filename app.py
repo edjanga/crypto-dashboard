@@ -43,10 +43,7 @@ dcc.Link(children=['correlation'], href='/pages/correlation.py',target='_blank')
 width=px, height=px, className='fa-chart-pie'), \
 dcc.Link(children=['analytics'], href='/pages/analytics.py', target='_blank')], \
                            style={'display': 'flex'}))]),\
-                     html.Div(children=[html.Div(children=[html.P('Contact', style={'text-align':'center',\
-                                                                                    'color':'#ffffff',\
-                                                                                    'display':'flex',\
-                                                                                    'justify-content':'center'}), \
+                     html.Div(children=[html.Div(children=[\
                      html.Div([html.A(children=DashIconify(icon="fa-brands:twitter",style=style_contact_dd,\
                                                            width=px,height=px),\
                                       href='https://twitter.com/emmanuel_djanga'), \

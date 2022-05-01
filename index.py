@@ -31,7 +31,7 @@ def display_page(pathname):
 if __name__ == '__main__':
     data_dummy_obj = Data()
     p1 = multiprocessing.Process(target=data_dummy_obj.live_query, args=[universe_ls])
-    p2 = multiprocessing.Process(target=dash_app.run_server(debug=True,port=8051))
+    p2 = multiprocessing.Process(target=dash_app.run_server(debug=True,port=8050))
     p1.start()
     p2.start()
     p1.join()
