@@ -28,18 +28,14 @@ def display_page(pathname):
     else:
         pass
 
-data_dummy_obj = Data()
 if __name__ == '__main__':
-    # test_mutltiprocessing = False
-    # if test_mutltiprocessing:
-    #     p1 = multiprocessing.Process(target=data_dummy_obj.live_query, args=[universe_ls])
-    #     p2 = multiprocessing.Process(target=dash_app.run_server(debug=True))
-    #     p1.start()
-    #     p2.start()
-    #     p1.join()
-    #     p2.join()
-    # else:
-    dash_app.run_server(debug=True,port=8051)
+    data_dummy_obj = Data()
+    p1 = multiprocessing.Process(target=data_dummy_obj.live_query, args=[universe_ls])
+    p2 = multiprocessing.Process(target=dash_app.run_server(debug=True))
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()
 
 
 

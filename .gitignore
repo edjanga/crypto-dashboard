@@ -91,7 +91,6 @@ coinapi-server.py
 client.py
 webserver.py
 tech-stock-dashboard.db
-config.py
 .idea
 test.py
 .DS_Store
